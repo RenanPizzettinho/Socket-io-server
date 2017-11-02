@@ -1,8 +1,10 @@
 $(function () {
-    var socket = io();
+    
+    var socket = io('/chat');
+    
     $('form').submit(onSubmit);
 
-    socket.on('chat message', onChatMessage);
+    socket.on('message', onChatMessage);
 
     function onSubmit () {
         
@@ -11,7 +13,8 @@ $(function () {
             message: $('#m').val()
         };
 
-        socket.emit('chat message', message);
+        socket.emit('message', message);
+    
         $('#m').val('');
 
         return false;
