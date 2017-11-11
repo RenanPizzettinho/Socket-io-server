@@ -8,8 +8,8 @@ function chat(io){
     
     function chatOnConnection(socket) {
         
-        console.log('Um usuário conectado ao chat');
-    
+        console.log('Novo usuário conectado ao chat: (' + socket.id + '-' + socket.handshake.address + ')');
+
         socket.broadcast.emit('hi');
         
         socket.on('disconnect',chatOnDisconnect);
@@ -25,10 +25,16 @@ function chat(io){
         function chatOnMessage(msg) {
             
             chat.emit('message', msg);
-            console.log('user: ' + msg.user + ' - message: ' + msg.message);
-    
+            console.log(
+                '##NOVA MENSAGEM###' +
+                '\nUsuário: ' + msg.user + '('+socket.id+') ' + 
+                '\nMensagem: ' + msg.message + 
+                '\nEndereço: ' + socket.handshake.address + 
+                '\nData/hora: ' + socket.handshake.time
+            );
+
         }
         
     }
-    
+
 }
